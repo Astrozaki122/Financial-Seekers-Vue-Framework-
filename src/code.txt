@@ -1,0 +1,75 @@
+<script>
+import { RouterLink, RouterView } from 'vue-router';
+
+export default {
+  name: 'App',
+  components: {
+    RouterLink,
+    RouterVeiw
+  },
+  data(){
+    return{
+      isLoggedIN: !!localStorage.getItem("username"),
+    };
+  },
+  methods:{
+    logout(){
+      localStorage.removeItem("username");
+      this.isLoggedIN = false;
+      this.$router.push("/login");
+    },
+  },
+};
+</script>
+<template>
+<h1>Financal Seekers</h1>
+  <nav>
+   <router-link to='/Signup'>Signup</router-link>
+   <router-link to="/Login">Login</router-link>
+  </nav>
+  
+  <div>
+    <router-view></router-view>
+  </div>
+</template>
+
+<style Scoped>
+nav{
+  display: flex;
+  gap: 10px;
+}
+
+h1{
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+</style>
+
+
+
+mport App from './App.vue'
+import Finance from './components/Finance.vue'
+import login from './components/Login.vue'
+import Forum from './components/Forum.vue'
+import Signup from './components/Signup.vue'
+import Navbar from './components/Navbar.vue'
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes: [ 
+        {path: '/Login', component: login},
+        {path: '/Finance', component: Finance},
+        {path: '/Forum', component: Forum},
+        {path: '/Signup', component: Signup}
+        
+    ]
+});
+
+
+const app = createApp(App)
+app.component('login', login)
+app.component('Finance', Finance)
+app.component('Forum', Forum)
+app.component('Signup', Signup) 
+app.use(router)
+app.mount('#app')
